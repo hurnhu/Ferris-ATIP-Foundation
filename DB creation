@@ -1,0 +1,62 @@
+CREATE DATABASE CMS;
+
+USE CMS;
+
+CREATE TABLE pgT(
+pgType INT AUTO_INCREMENT,
+pageSc VARCHAR (15),
+CONSTRAINT pgTypePK PRIMARY KEY (pgType)
+);
+
+CREATE TABLE userP(
+perms INT AUTO_INCREMENT,
+permsType VARCHAR (15),
+CONSTRAINT permsPK PRIMARY KEY (perms)
+);
+
+CREATE TABLE pages(
+    pgID INT AUTO_INCREMENT,
+    pgType INT,
+    title TEXT,
+    author TEXT,
+    body TEXT,
+    modified DATETIME,
+    permsNeeded INT,
+    active INT,
+    CONSTRAINT pgIDPK PRIMARY KEY (pgID),
+    CONSTRAINT pgTypeFK FOREIGN KEY (pgType) REFERENCES pgT (pgType)
+);
+
+CREATE TABLE users(
+    userID INT AUTO_INCREMENT,
+    perms INT,
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
+    password VARCHAR(50),
+    username VARCHAR(50),
+    CONSTRAINT uIDPK PRIMARY KEY (userID),
+    CONSTRAINT pgTFK FOREIGN KEY (perms) REFERENCES userP (perms)
+);
+
+INSERT INTO userP (permsType) VALUES("Admin");
+INSERT INTO userP (permsType) VALUES("Editor");
+
+INSERT INTO pgT (pageSc) VALUES("Home");
+INSERT INTO pgT (pageSc) VALUES("About Us");
+INSERT INTO pgT (pageSc) VALUES("Events");
+INSERT INTO pgT (pageSc) VALUES("News");
+INSERT INTO pgT (pageSc) VALUES("Calendar");
+INSERT INTO pgT (pageSc) VALUES("Forms");
+INSERT INTO pgT (pageSc) VALUES("Contact Us");
+
+INSERT INTO users VALUES (1, 1, "Michael", "LaPan", "tpass", "admin");
+INSERT INTO users VALUES (2, 2, "Adam", "Smith", "apass", "editor");
+
+INSERT INTO pages VALUES(1, 1, "", "", "", NOW(), 2);
+INSERT INTO pages VALUES(2, 2, "", "", "", NOW(), 2);
+INSERT INTO pages VALUES(3, 3, "", "", "", NOW(), 2);
+INSERT INTO pages VALUES(4, 4, "", "", "", NOW(), 2);
+INSERT INTO pages VALUES(5, 5, "", "", "", NOW(), 2);
+INSERT INTO pages VALUES(6, 6, "", "", "", NOW(), 2);
+INSERT INTO pages VALUES(7, 7, "", "", "", NOW(), 2);
+
